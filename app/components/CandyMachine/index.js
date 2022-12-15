@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { useRouter } from 'next/router';
+import CountdownTimer from '../../countDownTimer';
+
 import { Connection, PublicKey } from "@solana/web3.js";
 import { Program, AnchorProvider, web3 } from "@project-serum/anchor";
 import { MintLayout, TOKEN_PROGRAM_ID, Token } from "@solana/spl-token";
@@ -19,6 +22,7 @@ const opts = {
 };
 
 const CandyMachine = ({ walletAddress }) => {
+    const router = useRouter()
 
     const [candyMachine, setCandyMachine] = useState(null);
 
@@ -231,6 +235,7 @@ const CandyMachine = ({ walletAddress }) => {
         } catch (e) {
             console.log(e);
         }
+        router.reload(window.location.pathname);
         return [];
     };
 
@@ -319,13 +324,36 @@ const CandyMachine = ({ walletAddress }) => {
 
     }
 
+    const renderDropTimer = () => {
+        // Get the current date and dropDate in a JavaScript Date object
+        const currentDate = new Date();
+        const dropDate = new Date(candyMachine.state.goLiveData * 1000);
+      
+        // If currentDate is before dropDate, render our Countdown component
+        if (currentDate < dropDate) {
+          console.log('Before drop date!');
+          // Don't forget to pass over your dropDate!
+          return <CountdownTimer dropDate={dropDate} />;
+        }
+      
+        // Else let's just return the current drop date
+        return <p>{`Drop Date: ${candyMachine.state.goLiveDateTimeString}`}</p>;
+      };
+
     return (
-        candyMachine && (<div className="machine-container">
+        candyMachine && candyMachine.state && (<div className="machine-container">
             <p>{`Drop Date: ${candyMachine.state.goLiveDataTimeString}`}</p>
             <p>{`Items Minted: ${candyMachine.state.itemsRedeemed} / ${candyMachine.state.itemsAvailable}`}</p>
-            <button className="cta-button mint-button" onClick={mintToken}>
-                Mint NFT
-            </button>
+            {candyMachine.state.itemsRedeemed === candyMachine.state.itemsAvailable ? (
+                <p className="sub-text">Sold Out 🙊</p>
+                ) : (
+                <button
+                    className="cta-button mint-button"
+                    onClick={mintToken}
+                >
+                    Mint NFT
+                </button>
+            )}
         </div>
      )
     );

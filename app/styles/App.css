@@ -1,7 +1,7 @@
 .App {
     height: 100vh;
-    background-image: url("https://pbs.twimg.com/media/Fj6Za0GXwAEUFxK?format=jpg&name=4096x4096");
-    background-size: 100%;
+    background-image: url("https://pbs.twimg.com/media/FjquS-sXgAcOMWN?format=jpg&name=medium");
+    background-size: 75%;
     background-repeat: no-repeat;
     background-position: center;
     overflow: scroll;
@@ -171,6 +171,14 @@
     transform: scale(1.1);
 }
 
+.timer-container .timer-header {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.timer-container .timer-value {
+    font-size: 18px;
+}
 /* KeyFrames */
 @-webkit-keyframes gradient-animation {
     0% {
