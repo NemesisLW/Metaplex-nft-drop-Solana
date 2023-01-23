@@ -31,7 +31,7 @@ const Home = () => {
         <div className="App">
             <div className="container">
                 <div className="header-container">
-                    <p className="header">Stable Diffusion Drop</p>
+                    <p className="header">Stable Diffusion</p>
                     <p className="sub-text">Noone cares really</p>
                     {/* Render your connect to wallet button right here */}
                     {wallet.publicKey ? <CandyMachine walletAddress={wallet} /> : renderNotConnectedContainer()}
